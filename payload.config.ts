@@ -35,8 +35,9 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   //editor: slateEditor({}),
-  editor: lexicalEditor(),
+
   collections: [Page, Media, Post, User],
+  editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -79,6 +80,41 @@ export default buildConfig({
         },
       })
     }
+  },
+  localization: {
+    locales: [
+      {
+        label: 'العربية',
+        code: 'ar',
+        rtl: true,
+      },
+      {
+        label: 'Čeština',
+        code: 'cz',
+      },
+      {
+        label: 'Deutsch',
+        code: 'de',
+      },
+      {
+        label: 'English',
+        code: 'en',
+      },
+      {
+        label: 'Polski',
+        code: 'pl',
+      },
+      {
+        label: 'Русский',
+        code: 'ru',
+      },
+      {
+        label: 'Türkçe',
+        code: 'tr',
+      },
+    ],
+    defaultLocale: 'en',
+    fallback: true,
   },
   // Sharp is now an optional dependency -
   // if you want to resize images, crop, set focal point, etc.
