@@ -1,5 +1,5 @@
 import path from 'path'
-// import { postgresAdapter } from '@payloadcms/db-postgres'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { en } from 'payload/i18n/en'
 import {
   AlignFeature,
@@ -20,10 +20,15 @@ import {
   UploadFeature,
 } from '@payloadcms/richtext-lexical'
 //import { slateEditor } from '@payloadcms/richtext-slate'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
+// import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload/config'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import { Page } from '@/app/payload/collections/page'
+import { Post } from '@/app/payload/collections/post'
+import { Media } from '@/app/payload/collections/media'
+import { User } from '@/app/payload/collections/user'
+import { COLLECTION_SLUG_USER } from '@/app/payload/collections/user/User'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,55 +36,19 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   //editor: slateEditor({}),
   editor: lexicalEditor(),
-  collections: [
-    {
-      slug: 'users',
-      auth: true,
-      access: {
-        delete: () => false,
-        update: () => false,
-      },
-      fields: [],
-    },
-    {
-      slug: 'pages',
-      admin: {
-        useAsTitle: 'title',
-      },
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-        },
-        {
-          name: 'content',
-          type: 'richText',
-        },
-      ],
-    },
-    {
-      slug: 'media',
-      upload: true,
-      fields: [
-        {
-          name: 'text',
-          type: 'text',
-        },
-      ],
-    },
-  ],
+  collections: [Page, Media, Post, User],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  // db: postgresAdapter({
-  //   pool: {
-  //     connectionString: process.env.POSTGRES_URI || ''
-  //   }
-  // }),
-  db: mongooseAdapter({
-    url: process.env.MONGODB_URI || '',
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.POSTGRES_URI || '',
+    },
   }),
+  // db: mongooseAdapter({
+  //   url: process.env.MONGODB_URI || '',
+  // }),
 
   /**
    * Payload can now accept specific translations from 'payload/i18n/en'
@@ -97,14 +66,13 @@ export default buildConfig({
     },
   },
   async onInit(payload) {
-    const existingUsers = await payload.find({
-      collection: 'users',
-      limit: 1,
+    const { totalDocs: userCount } = await payload.count({
+      collection: COLLECTION_SLUG_USER,
     })
 
-    if (existingUsers.docs.length === 0) {
+    if (!userCount) {
       await payload.create({
-        collection: 'users',
+        collection: COLLECTION_SLUG_USER,
         data: {
           email: 'dev@payloadcms.com',
           password: 'test',
