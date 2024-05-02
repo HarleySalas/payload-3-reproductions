@@ -4,6 +4,7 @@ export const COLLECTION_SLUG_PAGE = 'page'
 
 export const Page: CollectionConfig = {
   slug: COLLECTION_SLUG_PAGE,
+  //slug: 'page',
   admin: {
     useAsTitle: 'title',
   },
