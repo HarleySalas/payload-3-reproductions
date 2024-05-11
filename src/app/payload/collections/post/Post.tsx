@@ -13,5 +13,11 @@ export const Post: CollectionConfig = {
       name: 'content',
       type: 'richText',
     },
+    {
+      name: 'author',
+      type: 'relationship',
+      relationTo: 'user',
+      unique: true,
+    },
   ],
 }
