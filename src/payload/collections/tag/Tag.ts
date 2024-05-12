@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types'
-import { access } from '@/app/payload/access'
+import { access } from '@/payload/access'
 
 export const COLLECTION_SLUG_TAG = 'tag'
 

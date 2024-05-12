@@ -6,13 +6,12 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload/config'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
-import { Page } from '@/app/payload/collections/page'
-import { Post } from '@/app/payload/collections/post'
-import { Media } from '@/app/payload/collections/media'
-import { User } from '@/app/payload/collections/user'
-import { COLLECTION_SLUG_USER } from '@/app/payload/collections/user/User'
-import { Tag } from '@/app/payload/collections/tag'
-
+import { Page } from '@/payload/collections/page'
+import { Media } from '@/payload/collections/media'
+import { Post } from '@/payload/collections/post'
+import { Tag } from '@/payload/collections/tag'
+import { User } from '@/payload/collections/user'
+import { COLLECTION_SLUG_USER } from '@/payload/collections/user/User'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
