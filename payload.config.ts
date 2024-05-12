@@ -2,7 +2,6 @@ import path from 'path'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { en } from 'payload/i18n/en'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-//import { slateEditor } from '@payloadcms/richtext-slate'
 // import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload/config'
 import sharp from 'sharp'
@@ -12,14 +11,14 @@ import { Post } from '@/app/payload/collections/post'
 import { Media } from '@/app/payload/collections/media'
 import { User } from '@/app/payload/collections/user'
 import { COLLECTION_SLUG_USER } from '@/app/payload/collections/user/User'
+import { Tag } from '@/app/payload/collections/tag'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  //editor: slateEditor({}),
   editor: lexicalEditor(),
-  collections: [Page, Media, Post, User],
+  collections: [Page, Media, Post, Tag, User],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -59,6 +58,16 @@ export default buildConfig({
         data: {
           email: 'dev@payloadcms.com',
           password: 'test',
+          role: 'admin',
+        },
+      })
+
+      await payload.create({
+        collection: COLLECTION_SLUG_USER,
+        data: {
+          email: 'user@payloadcms.com',
+          password: 'test',
+          role: 'user',
         },
       })
     }

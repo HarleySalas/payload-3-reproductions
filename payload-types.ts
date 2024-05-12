@@ -11,6 +11,7 @@ export interface Config {
     page: Page;
     media: Media;
     post: Post;
+    tag: Tag;
     user: User;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -70,6 +71,7 @@ export interface Media {
 export interface Post {
   id: number;
   title?: string | null;
+  tags?: (number | null) | Tag;
   content?: {
     root: {
       type: string;
@@ -90,10 +92,21 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tag".
+ */
+export interface Tag {
+  id: number;
+  title?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "user".
  */
 export interface User {
   id: number;
+  role?: ('user' | 'admin') | null;
   updatedAt: string;
   createdAt: string;
   email: string;
