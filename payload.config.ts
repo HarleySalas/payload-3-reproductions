@@ -42,7 +42,8 @@ export default buildConfig({
 
   admin: {
     autoLogin: {
-      email: 'dev@payloadcms.com',
+      //login to "user" role for reproduction
+      email: 'user@payloadcms.com',
       password: 'test',
       prefillOnly: true,
     },
@@ -62,6 +63,7 @@ export default buildConfig({
         },
       })
 
+      //create user role account for reproduction
       await payload.create({
         collection: COLLECTION_SLUG_USER,
         data: {
