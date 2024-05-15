@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload/types'
+import { generateTextFromServer } from './generateTextFromServer'
 
 export const COLLECTION_SLUG_PAGE = 'page'
 
@@ -15,6 +16,16 @@ export const Page: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
+    },
+    {
+      name: 'serverGeneratedText',
+      type: 'text',
+      admin: {
+        readOnly: true,
+      },
+      hooks: {
+        afterRead: [generateTextFromServer],
+      },
     },
   ],
 }
