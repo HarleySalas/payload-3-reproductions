@@ -8,9 +8,9 @@
 
 export interface Config {
   collections: {
-    page: Page;
-    media: Media;
-    post: Post;
+    movie: Movie;
+    theatre: Theatre;
+    upload: Upload;
     user: User;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -23,68 +23,35 @@ export interface Config {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "page".
+ * via the `definition` "movie".
  */
-export interface Page {
+export interface Movie {
   id: number;
   title?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  description?: string | null;
+  theatre?: (number | null) | Theatre;
+  upload?: (number | null) | Upload;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "theatre".
  */
-export interface Media {
+export interface Theatre {
   id: number;
-  alt: string;
+  name: string;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "post".
+ * via the `definition` "upload".
  */
-export interface Post {
+export interface Upload {
   id: number;
-  title?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  title: string;
+  theatre?: (number | null) | Theatre;
   updatedAt: string;
   createdAt: string;
 }

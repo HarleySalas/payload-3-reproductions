@@ -1,0 +1,1 @@
+export { Theatre } from './Theatre'

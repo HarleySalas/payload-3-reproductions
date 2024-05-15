@@ -2,24 +2,27 @@ import path from 'path'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { en } from 'payload/i18n/en'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-//import { slateEditor } from '@payloadcms/richtext-slate'
 // import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload/config'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
-import { Page } from '@/payload/collections/page'
-import { Post } from '@/payload/collections/post'
-import { Media } from '@/payload/collections/media'
 import { User } from '@/payload/collections/user'
-import { COLLECTION_SLUG_USER } from '@/payload/collections/user/User'
+import {
+  COLLECTION_SLUG_MOVIE,
+  COLLECTION_SLUG_THEATRE,
+  COLLECTION_SLUG_UPLOAD,
+  COLLECTION_SLUG_USER,
+} from '@/payload/constants'
+import { Movie } from '@/payload/collections/movie'
+import { Theatre } from '@/payload/collections/theatre'
+import { Upload } from '@/payload/collections/upload'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  //editor: slateEditor({}),
   editor: lexicalEditor(),
-  collections: [Page, Media, Post, User],
+  collections: [Movie, Theatre, Upload, User],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -32,11 +35,6 @@ export default buildConfig({
   // db: mongooseAdapter({
   //   url: process.env.MONGODB_URI || '',
   // }),
-
-  /**
-   * Payload can now accept specific translations from 'payload/i18n/en'
-   * This is completely optional and will default to English if not provided
-   */
   i18n: {
     supportedLanguages: { en },
   },
@@ -54,6 +52,7 @@ export default buildConfig({
     })
 
     if (!userCount) {
+      payload.logger.info('Seeding first user...')
       await payload.create({
         collection: COLLECTION_SLUG_USER,
         data: {
@@ -62,12 +61,92 @@ export default buildConfig({
         },
       })
     }
-  },
-  // Sharp is now an optional dependency -
-  // if you want to resize images, crop, set focal point, etc.
-  // make sure to install it and pass it to the config.
 
-  // This is temporary - we may make an adapter pattern
-  // for this before reaching 3.0 stable
+    const { totalDocs: movieCount } = await payload.count({
+      collection: COLLECTION_SLUG_MOVIE,
+    })
+    const { totalDocs: theatreCount } = await payload.count({
+      collection: COLLECTION_SLUG_THEATRE,
+    })
+    const { totalDocs: uploadCount } = await payload.count({
+      collection: COLLECTION_SLUG_UPLOAD,
+    })
+
+    const theatreMap = new Map()
+
+    if (!theatreCount) {
+      payload.logger.info('Seeding Theatres...')
+      await Promise.all([
+        payload
+          .create({
+            collection: COLLECTION_SLUG_THEATRE,
+            data: {
+              name: 'Theatre A',
+            },
+          })
+          .then((res) => theatreMap.set('theatreA', res.id)),
+        payload
+          .create({
+            collection: COLLECTION_SLUG_THEATRE,
+            data: {
+              name: 'Theatre B',
+            },
+          })
+          .then((res) => theatreMap.set('theatreB', res.id)),
+      ])
+    }
+
+    const movieMap = new Map()
+
+    if (!movieCount) {
+      payload.logger.info('Seeding Movies...')
+      await Promise.all([
+        payload
+          .create({
+            collection: COLLECTION_SLUG_MOVIE,
+            data: {
+              title: 'Movie A',
+              theatre: theatreMap.get('theatreA'),
+            },
+          })
+          .then((res) => movieMap.set('movieA', res.id)),
+        payload
+          .create({
+            collection: COLLECTION_SLUG_MOVIE,
+            data: {
+              title: 'Movie B',
+              theatre: theatreMap.get('theatreB'),
+            },
+          })
+          .then((res) => movieMap.set('movieB', res.id)),
+      ])
+    }
+
+    const uploadMap = new Map()
+
+    if (!uploadCount) {
+      payload.logger.info('Seeding Uploads...')
+      await Promise.all([
+        payload
+          .create({
+            collection: COLLECTION_SLUG_UPLOAD,
+            data: {
+              title: 'Upload A',
+              theatre: theatreMap.get('theatreA'),
+            },
+          })
+          .then((res) => uploadMap.set('uploadA', res.id)),
+        payload
+          .create({
+            collection: COLLECTION_SLUG_UPLOAD,
+            data: {
+              title: 'Upload B',
+              theatre: theatreMap.get('theatreB'),
+            },
+          })
+          .then((res) => uploadMap.set('uploadB', res.id)),
+      ])
+    }
+  },
   sharp,
 })
