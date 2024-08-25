@@ -4,7 +4,7 @@ import { en } from 'payload/i18n/en'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 //import { slateEditor } from '@payloadcms/richtext-slate'
 // import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { buildConfig } from 'payload/config'
+import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { Page } from '@/payload/collections/page'
@@ -46,6 +46,9 @@ export default buildConfig({
       email: 'dev@payloadcms.com',
       password: 'test',
       prefillOnly: true,
+    },
+    importMap: {
+      baseDir: path.resolve(dirname),
     },
   },
   async onInit(payload) {
