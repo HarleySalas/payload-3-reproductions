@@ -4,19 +4,17 @@
  */
 
 import { getPayload } from 'payload'
-import { importConfig } from 'payload/node'
-import 'dotenv/config'
+import config from '@payload-config'
 
 async function run() {
-  const awaitedConfig = await importConfig('../../payload.config.ts')
-  const payload = await getPayload({ config: awaitedConfig })
+  const payload = await getPayload({ config })
 
   const pages = await payload.find({
-    collection: 'pages',
+    collection: 'page',
   })
 
   console.log(pages)
   process.exit(0)
 }
 
-run().catch(console.error)
+await run()

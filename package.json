@@ -18,29 +18,33 @@
     "node": ">=18.19.0"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "3.0.0-beta.91",
-    "@payloadcms/db-postgres": "3.0.0-beta.91",
-    "@payloadcms/next": "3.0.0-beta.91",
-    "@payloadcms/plugin-nested-docs": "3.0.0-beta.91",
-    "@payloadcms/plugin-seo": "3.0.0-beta.91",
-    "@payloadcms/richtext-lexical": "3.0.0-beta.91",
-    "@payloadcms/ui": "3.0.0-beta.91",
+    "@payloadcms/db-mongodb": "3.0.0-beta.107",
+    "@payloadcms/db-postgres": "3.0.0-beta.107",
+    "@payloadcms/next": "3.0.0-beta.107",
+    "@payloadcms/plugin-nested-docs": "3.0.0-beta.107",
+    "@payloadcms/plugin-seo": "3.0.0-beta.107",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.107",
+    "@payloadcms/ui": "3.0.0-beta.107",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
-    "next": "15.0.0-canary.104",
-    "payload": "3.0.0-beta.91",
-    "react": "19.0.0-rc-06d0b89e-20240801",
-    "react-dom": "19.0.0-rc-06d0b89e-20240801",
+    "next": "15.0.0-canary.159",
+    "payload": "3.0.0-beta.107",
+    "react": "19.0.0-rc-a99d8e8d-20240916",
+    "react-dom": "19.0.0-rc-a99d8e8d-20240916",
     "sharp": "0.32.6"
   },
   "devDependencies": {
     "@types/node": "^20.11.25",
-    "@types/react": "^18.2.64",
-    "@types/react-dom": "^18.2.21",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.1.0",
     "tsx": "^4.7.1",
     "typescript": "^5.4.2"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
   }
 }
