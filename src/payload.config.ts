@@ -19,6 +19,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    autoLogin: { email: 'dev@payloadcms.com', password: 'password' },
   },
   collections: [Users, Media],
   editor: lexicalEditor(),
@@ -30,6 +31,7 @@ export default buildConfig({
     client: {
       url: process.env.DATABASE_URI || '',
     },
+    idType: 'uuid',
   }),
   sharp,
   plugins: [
