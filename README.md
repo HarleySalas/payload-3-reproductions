@@ -1,8 +1,7 @@
-# blank
+# Payload 3 Reproductions
 
-blank
+> \[!IMPORTANT\]
+>
+> Please make sure that you do not modify the .env.example’s DATABASE_URI
 
-## Attributes
-
-- **Database**: SQLite
-- **Storage Adapter**: localDisk
+This repository uses SQLite and pushes the file `payload.db` to github, with the first user created for `autoLogin` and any initial data necessary for respective branch reproductions.
