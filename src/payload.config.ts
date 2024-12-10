@@ -9,6 +9,9 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Order } from './collections/Order'
+import { Customer } from './collections/Customer'
+import { Product } from './collections/Product'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,7 +24,7 @@ export default buildConfig({
     },
     autoLogin: { email: 'dev@payloadcms.com', password: 'password' },
   },
-  collections: [Users, Media],
+  collections: [Product, Order, Customer, Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -31,7 +34,6 @@ export default buildConfig({
     client: {
       url: process.env.DATABASE_URI || '',
     },
-    idType: 'uuid',
   }),
   sharp,
   plugins: [
