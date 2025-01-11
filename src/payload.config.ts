@@ -9,6 +9,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Page } from './collections/Page'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,7 +22,7 @@ export default buildConfig({
     },
     autoLogin: { email: 'dev@payloadcms.com', password: 'password' },
   },
-  collections: [Users, Media],
+  collections: [Page, Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -36,6 +37,12 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
+    // nestedDocsPlugin({
+    //   collections: ['page'],
+    //   generateLabel: (_, doc) => doc?.title as string,
+    //   //Do not change the `.replace` below. It ensures that "/" is allowed for the slug, with breadcrumbs
+    //   generateURL: (docs) =>
+    //     docs.reduce((url, doc) => `${url}/${doc.slug}`.replace(/^\/+/, '/'), ''),
+    // }),
   ],
 })
