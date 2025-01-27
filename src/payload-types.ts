@@ -11,6 +11,8 @@ export interface Config {
     users: UserAuthOperations;
   };
   collections: {
+    example: Example;
+    'relationship-test': RelationshipTest;
     users: User;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -19,6 +21,8 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    example: ExampleSelect<false> | ExampleSelect<true>;
+    'relationship-test': RelationshipTestSelect<false> | RelationshipTestSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -56,6 +60,27 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "example".
+ */
+export interface Example {
+  id: string;
+  title?: string | null;
+  relationship?: (string | null) | RelationshipTest;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "relationship-test".
+ */
+export interface RelationshipTest {
+  id: string;
+  title?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -100,6 +125,14 @@ export interface Media {
 export interface PayloadLockedDocument {
   id: string;
   document?:
+    | ({
+        relationTo: 'example';
+        value: string | Example;
+      } | null)
+    | ({
+        relationTo: 'relationship-test';
+        value: string | RelationshipTest;
+      } | null)
     | ({
         relationTo: 'users';
         value: string | User;
@@ -149,6 +182,25 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "example_select".
+ */
+export interface ExampleSelect<T extends boolean = true> {
+  title?: T;
+  relationship?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "relationship-test_select".
+ */
+export interface RelationshipTestSelect<T extends boolean = true> {
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
