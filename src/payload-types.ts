@@ -11,6 +11,7 @@ export interface Config {
     users: UserAuthOperations;
   };
   collections: {
+    example: Example;
     users: User;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -19,6 +20,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    example: ExampleSelect<false> | ExampleSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -56,6 +58,16 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "example".
+ */
+export interface Example {
+  id: string;
+  example?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -100,6 +112,10 @@ export interface Media {
 export interface PayloadLockedDocument {
   id: string;
   document?:
+    | ({
+        relationTo: 'example';
+        value: string | Example;
+      } | null)
     | ({
         relationTo: 'users';
         value: string | User;
@@ -149,6 +165,15 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "example_select".
+ */
+export interface ExampleSelect<T extends boolean = true> {
+  example?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
