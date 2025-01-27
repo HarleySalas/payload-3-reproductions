@@ -15,22 +15,22 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
-    "@payloadcms/db-sqlite": "^3.16.0",
-    "@payloadcms/next": "^3.16.0",
-    "@payloadcms/payload-cloud": "^3.16.0",
-    "@payloadcms/richtext-lexical": "^3.16.0",
+    "@payloadcms/db-sqlite": "^3.19.0",
+    "@payloadcms/next": "^3.19.0",
+    "@payloadcms/payload-cloud": "^3.19.0",
+    "@payloadcms/richtext-lexical": "^3.19.0",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
-    "next": "^15.0.4",
-    "payload": "^3.16.0",
+    "next": "^15.1.6",
+    "payload": "^3.19.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sharp": "0.32.6"
   },
   "devDependencies": {
-    "@types/node": "^22.5.4",
-    "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.2",
+    "@types/node": "^22.10.10",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "typescript": "5.7.2"
