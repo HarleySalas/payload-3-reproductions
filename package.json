@@ -15,14 +15,14 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
-    "@payloadcms/db-sqlite": "^3.19.0",
-    "@payloadcms/next": "^3.19.0",
-    "@payloadcms/payload-cloud": "^3.19.0",
-    "@payloadcms/richtext-lexical": "^3.19.0",
+    "@payloadcms/db-sqlite": "3.22.0",
+    "@payloadcms/next": "3.22.0",
+    "@payloadcms/payload-cloud": "3.22.0",
+    "@payloadcms/richtext-lexical": "3.22.0",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "next": "^15.1.6",
-    "payload": "^3.19.0",
+    "payload": "3.22.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sharp": "0.32.6"
@@ -36,7 +36,12 @@
     "typescript": "5.7.2"
   },
   "engines": {
-    "node": "^18.20.2 || >=20.9.0"
+    "node": "^18.20.2 || >=20.9.0",
+    "pnpm": "^9"
   },
-  "packageManager": "pnpm@8.15.9+sha512.499434c9d8fdd1a2794ebf4552b3b25c0a633abcee5bb15e7b5de90f32f47b513aca98cd5cfd001c31f0db454bc3804edccd578501e4ca293a6816166bbd9f81"
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  }
 }
